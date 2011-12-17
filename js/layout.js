@@ -52,6 +52,9 @@ function useHttpResponse() {
   }
 }
 
+
+// Workaround for clients request that global admin to be able to change library so depatment needs to be 
+// updated based on the value of the library  select form control
 function useHttpResponse2() {
   if (http.readyState == 4) {
     var textout = http.responseText;
@@ -88,7 +91,7 @@ function libDepartments(param) {
   http.send(null);
  
 }
- 
+// Add an enrty to the end of a selcet list. window.parent = IE, window.opener = GEKO 
 function appendOptionLast(num,val,win)
 {
   var newTxt;     
@@ -122,7 +125,7 @@ function appendOptionLast(num,val,win)
   
   } 
   
-  
+//replace + with spaces in the value of subject  
   var reg =  /[+]/g;
   newTxt = newTxt.replace(reg,' ') ;
   elOptNew.text = newTxt;
@@ -154,7 +157,7 @@ function appendOptionLast(num,val,win)
   
 
   
-  // Process new event here - Peter L
+// Process new event here - Peter L
   try {
     elSel.add(elOptNew, null); // standards compliant; doesn't work in IE
   }
@@ -163,11 +166,8 @@ function appendOptionLast(num,val,win)
   }      
  
  
- // A nifty bit of JQuery to remove duplicates from a select list
-  
-  
- 
-               var usedNames = {};
+// A nifty bit of JQuery to remove duplicates from a select list for newly created items 
+var usedNames = {};
 $("select[name='subjects[]'] > option").each(function () {
     if(usedNames[this.text]) {
         $(this).remove();
@@ -181,8 +181,7 @@ $("select[name='subjects[]'] > option").each(function () {
 
 }
 
-
-
+// Select all the subkects
 function selectAll(selectBox,selectAll) {
     // have we been passed an ID
     if (typeof selectBox == "string") {
@@ -198,14 +197,12 @@ function selectAll(selectBox,selectAll) {
 }
 
 
-
-
 function redirectPage(url)
 {
 window.location = url;
 }
 
-  var myCalendar;
+var myCalendar;
 function doOnLoad() {
     myCalendar = new dhtmlXCalendarObject(["calendar","calendar1", "calendar2", "calendar3","calendar4","calendar5","calendar6","calendar7"]);
 }
@@ -224,7 +221,8 @@ function thisDate()
     var addedDate = document.getElementById('calendar').value;
     var deadlineDate = document.getElementById('calendar1').value;
     var reviewDate = document.getElementById('calendar2').value;
-    
+  
+  // Add trailing zeros to dates so 1-1-2011 becomes 01-01-2011   
     y  = thisDate.getFullYear();
     d  = thisDate.getDate();
     if (d <10)
@@ -250,21 +248,19 @@ function thisDate()
     
     nextweek = nwd+'-'+nwm+'-'+nwy; 
 
-  
+  // Initialize claender values
     if (document.getElementById('calendar').value == "")
     {
     document.getElementById('calendar').value = today;
     }
-  if (document.getElementById('calendar1').value == "")
-  { 
+    if (document.getElementById('calendar1').value == "")
+    { 
     document.getElementById('calendar1').value = nextweek;
-   }
-   
-  if (document.getElementById('calendar2').value == "30-11-1999")
-  { 
+    }
+    if (document.getElementById('calendar2').value == "30-11-1999")
+    { 
     document.getElementById('calendar2').value = '';
-   }
-   
+    }
     if (document.getElementById('calendar3').value == "")
     {
     document.getElementById('calendar3').value = today;

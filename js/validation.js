@@ -23,24 +23,24 @@ var caseNotes       =   document.getElementById('caseNotes');
     var deadlineDate = document.getElementById('calendar1').value;
     var reviewDate = document.getElementById('calendar2').value;
     var responseDate = document.getElementById('calendar3').value;
-    var x=new Date();
-    var y=new Date();     
+    var response=new Date();
+    var added=new Date();     
     // #FIXME - hmm - US to UK date conversions  are doing my head in, lets see if this works
     var mySplit = responseDate.split('-'); 
     var mySplit1 = addedDate.split('-'); 
     
-x.setFullYear(mySplit[2],mySplit[1]-1,mySplit[0]);
-y.setFullYear(mySplit1[2],mySplit1[1]-1,mySplit1[0]);
+response.setFullYear(mySplit[2],mySplit[1]-1,mySplit[0]);
+added.setFullYear(mySplit1[2],mySplit1[1]-1,mySplit1[0]);
 var today = new Date()
 
 
-if (y>today)
+if (added>today)
   {
   alert("The Added Date  " + y + " is in the future, please choose a date on or before today");
   return false;
   }
   
-if (x>today)
+if (response>today)
   {
   alert("The Date of Response  " + x + " is in the future, please choose a date on or before today");
   return false;
@@ -65,6 +65,8 @@ if (x>today)
                  return valid;
              } 
 		 }
+		 
+		 // Validation for ither fields. If commented out do not remove, we may well use them later on
 /*         
         if (addrStreet.value == "")
         {
