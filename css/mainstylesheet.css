@@ -1,0 +1,132 @@
+#container {
+        width:1108px;
+        font-family: arial;
+        font-size:12px;
+        position:relative;
+        }
+#ajax_listOfOptions{
+        position:absolute;    /* Never change this one */
+        font-family: arial;  
+        width:225px;    /* Width of box */
+        height:250px;    /* Height of box */
+        overflow:auto;    /* Scrolling features */
+        border:1px solid #317082;    /* Dark green border */
+        background-color:#FFF;    /* White background color */
+        text-align:left;
+        font-size:0.9em;
+        z-index:100;
+    }
+    #ajax_listOfOptions div{    /* General rule for both .optionDiv and .optionDivSelected */
+        margin:1px;        
+        padding:1px;
+        cursor:pointer;
+        font-size:0.9em;
+    }
+    #ajax_listOfOptions .optionDiv{    /* Div for each item in list */
+        
+    }
+    #ajax_listOfOptions .optionDivSelected{ /* Selected item in the list */
+        background-color:#317082;
+        color:#FFF;
+    }
+    #ajax_listOfOptions_iframe{
+        background-color:#F00;
+        position:absolute;
+        z-index:5;
+    }
+    
+    form{
+        display:inline;
+    }
+    
+  
+      div.calendar {
+        max-width: 240px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      div.calendar table {
+        width: 100%;
+      }
+      div.dateField {
+        width: 140px;
+        padding: 6px;
+        -webkit-border-radius: 6px;
+        -moz-border-radius: 6px;
+        color: #555;
+        background-color: white;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      div#popupDateField:hover {
+        background-color: #cde;
+        cursor: pointer;
+      }
+
+      #subjects { width:340px; }
+      
+      span[class*=_error]   
+      {
+          color: red;
+          font-weight: bold;
+          font-style: italic;
+          font-size: 8px;
+          display:none;
+          
+      }
+      
+      .errorStack     
+      {
+          color:red;
+          font-weight:bold;
+          font-size:14px;
+          text-align:center;
+      }
+      
+      tr.results td.results table.results .results{
+          background-color:#e0e0e0 #cccccc;
+          border-left : black;
+          
+      }
+      
+      table.admin { padding: 0px; }
+      th.admin { 
+          color:white;
+          font-weight:bold;
+          background-color:#c7e96e;
+          text-align: center;
+      }
+      
+      tr.admin {
+          background-color:#c7e96e ;
+      }
+  
+       select.lq-button {
+          color:black;
+      }
+  
+        option.lq-button {
+        background-color:#c7e96e ;
+          color:black;
+          }
+      
+      table.tbloutline {
+          border-left: 1px solid black;
+          border-right: 1px solid black; 
+          border-bottom: 1px solid black; 
+          border-top: 1px solid black;  
+          
+      }
+
+      .hidden_dept {
+          
+          display:none;
+      }
+      
+      input:radio { font-size: 20;}
+      
+      A { text-decoration:none;
+      color: blue;
+      }
+td { text-align:left; }
