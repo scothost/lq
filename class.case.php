@@ -1,6 +1,7 @@
 <?php
 require_once 'class.layout.php';
-require_once 'class.borrower.php';    
+require_once 'class.borrower.php';  
+require_once 'class.search.php';     
 require_once 'class.dbh.php';
 error_reporting(0);
 
@@ -151,8 +152,51 @@ public function getLineItems($case_id)
 *  
 * {@source}   
 */
-       
+
     public function searchResults($user_id='',$home='')
+    {
+          global $dbh;
+          $sTerm = $_POST['keywords'];
+          $from = lqCase::convertDate($_POST['from'],'us');
+          $to = lqCase::convertDate($_POST['to'],'us');
+          $even = 2;	
+          
+                   
+          if (isset($_POST['keywords']) && !empty($_POST['keywords']))
+          {
+             $sTerm = $_POST['keywords'];     
+          }
+          
+          if (strpos(substr($sTerm,0,2),'"') == 1 && strpos(substr($sTerm,strlen($sTerm)-2,strlen($sTerm)),'"') == 1 )
+          {
+              $phrase = 'true'; 
+          } 
+          else { $phrase = 'false';}	
+          
+          
+          
+             
+       if (isset($_REQUEST['search']) || !empty($home))
+       {
+		   
+             switch ($_POST['criteria'])
+             {
+                case "borrower":
+                
+                $results = lqSearch::searchByBorrower($sTerm);
+                lqSearch::displayResults($results);
+                break;
+                
+                
+                case "case_id":
+                lqSearch::searchByCaseId($sTerm);
+                break;
+             }
+       }         
+		
+	}
+       
+    public function searchResults1($user_id='',$home='')
     {
           global $dbh;
           $sTerm = $_POST['keywords'];
@@ -228,6 +272,8 @@ public function getLineItems($case_id)
              switch ($_POST['criteria'])
              {
                 case "borrower":
+                lqSearch::searchByBorrower($_POST['criteria']);
+                break;
 
                                 
                                 $borArr = explode(" ",$sTerm);
@@ -438,21 +484,7 @@ else {
 }         
  }
   
- if (isset($_GET['sort']))
- {
-	 switch ($_GET['sort'])
-	 {
-		 case "borrower":
-         $query .= " and borrower.borrower_id = cases.borrower_id order by borrower.surname asc ";
-         break;
-         
-         default:
-         $query .= "  order by added_date desc ";
-         break;
-      }   
- }
- else 
- $query .= "  order by status desc,added_date desc ";
+ 
  
  		 debug("Search query\r\n" . $query);
  

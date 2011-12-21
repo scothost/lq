@@ -86,6 +86,21 @@ class borrower {
 * @return string
 *    
 */ 
+
+
+public function getName($borrower_id)
+{ 
+	 global $dbh;
+	 
+	 $query = "select * from borrower where borrower_id = " . $borrower_id;
+	 $res = $dbh->query($query);
+	 $obj = $dbh->fetch($res,'');
+	 
+	 return $obj;
+	
+}
+
+
 public function getInputNameValue($name,$type)
 {
    
