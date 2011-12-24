@@ -161,6 +161,11 @@ public function getLineItems($case_id)
           $to = lqCase::convertDate($_POST['to'],'us');
           $even = 2;	
           
+          if (isset($_POST['department']) && !empty($_POST['department']))
+          {
+			  $department = $_POST['department'];
+			}
+          
                    
           if (isset($_POST['keywords']) && !empty($_POST['keywords']))
           {
@@ -181,21 +186,46 @@ public function getLineItems($case_id)
 		   
              switch ($_POST['criteria'])
              {
-                case "borrower":
-                
+                case "borrower":               
                 $results = lqSearch::searchByBorrower($sTerm);
                 lqSearch::displayResults($results);
                 break;
                 
+                case "case_id":               
+                $results = lqSearch::searchByCaseId($sTerm);
+                break;
+                                
+                case "header":
+                $results = lqSearch::searchByCaseHeader($sTerm);
+                lqSearch::displayResults($results);
+                break;
                 
-                case "case_id":
-                lqSearch::searchByCaseId($sTerm);
+                case "detail":
+                $results = lqSearch::searchByCaseDetails($sTerm);
+                lqSearch::displayResults($results);
+                break;
+               
+                case "subject":
+					$results = lqSearch::searchBySubject($sTerm);
+					debug("in here" . $results);
+					lqSearch::displayResults($results);
+                break;
+                
+                case "department":
+					$results = lqSearch::searchByDepartment($_POST['department'], $sTerm);
+					//die($_POST['department']);
+					lqSearch::displayResults($results);
+                break;
+                
+                default:
+					$results = lqSearch::searchAll($sTerm);
+					lqSearch::displayResults($results);
                 break;
              }
        }         
 		
 	}
-       
+       /**
     public function searchResults1($user_id='',$home='')
     {
           global $dbh;
@@ -285,7 +315,7 @@ public function getLineItems($case_id)
                 $whereClause .= " or surname LIKE '%" . $bor . "%' or firstname like '%" .
                 $bor . "%' ";
 			}
-*/  
+*/  /*
               $sql = "SELECT borrower_id FROM borrower" . $whereClause; 
                  
               
@@ -409,7 +439,7 @@ subjects.subject LIKE '%" . $sTerm . "%' order by added_date desc";
      }
      $extra .= ")";
     
-    */ 
+    */ /*
      if (!empty($from) && !empty($to))
      {
      $extra .= " and caseid in (
@@ -566,7 +596,7 @@ $numRows = $dbh->rows($res);
        }
        
 
-    }
+    }*/
     
     public function getLibrary($case_id)
     {
