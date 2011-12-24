@@ -217,10 +217,14 @@ public function getLineItems($case_id)
 					lqSearch::displayResults($results);
                 break;
                 
-                default:
+                case "all":
 					$results = lqSearch::searchAll($sTerm);
 					lqSearch::displayResults($results);
                 break;
+                
+                default:
+ 					$results = lqSearch::openCases($_SESSION['user_id']);
+					lqSearch::displayResults($results);               
              }
        }         
 		

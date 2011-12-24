@@ -219,7 +219,9 @@ class lqSearch extends lqCase {
 	    global $dbh;
 	    $even = 2;
 	    $numRecs = count($results);
+	    if (!empty($_POST['criteria']))
         $caption = "Showing results 1 to " . $numRecs . " - criteria = '" . $_POST['criteria'] . "'";
+        else $caption = " Open cases for " . User::nameFromId($_SESSION['user_id']);
         $today = date("Y-m-d"); 
                     
       
@@ -291,6 +293,20 @@ class lqSearch extends lqCase {
 	  
 	}
 	
+ 
+    protected function openCases($user_id)
+    {
+		global $dbh;
+		
+		$query = "SELECT * from cases where assigned_to = " . $user_id . " and status = 'open'";
+		$res = $dbh->query($query);
+		
+		        while ($obj = $dbh->fetch($res))
+        $rtn[] = $obj;
+       
+        return $rtn;
+    }
+ 
     protected function searchByBorrower($sTerm)
     {
 		global $dbh;
