@@ -1178,9 +1178,10 @@ $subjVal = $this->subjectId($val);
        $dbh->query('COMMIT');
       }
       else {  $dbh->query('ROLLBACK'); }   
+   
+   die($query);   
       
-      
-   Header("Location: ?op=cases&caseid=" . $case_id);
+  // Header("Location: ?op=cases&caseid=" . $case_id);
      }
      
      
