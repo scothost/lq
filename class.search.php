@@ -5,7 +5,10 @@ require_once 'class.dbh.php';
 class lqSearch extends lqCase {
 
     public function __construct()
-    { }
+    {
+
+		
+		 }
     
     public function __destruct()
     {
@@ -17,6 +20,10 @@ class lqSearch extends lqCase {
 		
 		global $dbh;
        
+       
+       if (empty($sTerm))
+		die('<font color=red>Error please enter some keyword(s) to search for</font>');
+		
         if (!empty($_POST['from']))
         $from = lqCase::convertDate($_POST['from'],'us');
         if (!empty($_POST['to']))
@@ -39,7 +46,7 @@ class lqSearch extends lqCase {
 						if (is_array($termArr))
 						  foreach ($termArr as $term)
 							 if (!empty($term))
-								 $extraSql     .= "(cases.case_detail LIKE '%" . $term . "%' OR cases.case_header LIKE '%" . $term . "%' OR cases.case_response LIKE '%" . $term . "%') or ";
+								 $extraSql     .= "(cases.case_detail LIKE '%" . $term . "%' OR cases.case_header LIKE '%" . $term . "%' OR cases.case_response LIKE '%" . $term . "%')    and ";
 				}
 				else
 				{
@@ -47,11 +54,11 @@ class lqSearch extends lqCase {
 				// PETER -L : This is an exact search no need for an array or terms
 				// Split the term on whitespace and copy each element into an array
 			$extraSql     .= " (cases.case_detail like '%" . $sTerm . "%' OR cases.case_header like '%" . 
-			$sTerm . "%' OR cases.case_response like '%" . $sTerm . "%') or ";	
+			$sTerm . "%' OR cases.case_response like '%" . $sTerm . "%') and ";	
 				
 			}
 			 // Now remove the extra " or" from the end of $extraSql and add a closing ) to it
-             $extraSql = substr($extraSql,0,strlen($extraSql)-3) . ")";
+             $extraSql = substr($extraSql,0,strlen($extraSql)-4) . ")";
        }
        else $extraSql = ""; // To satisfy the query
                       
@@ -105,6 +112,7 @@ class lqSearch extends lqCase {
         // Finally concatenate the sorting criteria to the end of the query
         $query =  $query . $dateCheck  . $orderClause;
         debug ("SEARCHALL: " . $query);
+        debug ("EXTRA: " . $extraSql);
       //  die("term is " . $sTerm);
        
         $res = $dbh->query($query);
@@ -473,6 +481,11 @@ class lqSearch extends lqCase {
     {
 		global $dbh;
 		
+		
+		if (empty($sTerm))
+		die('<font color=red>Error please enter some keyword(s) to search for</font>');
+		
+		
 		if (!empty($_POST['from']))
 		$from = lqCase::convertDate($_POST['from'],'us');
 		if (!empty($_POST['to']))
@@ -498,13 +511,9 @@ class lqSearch extends lqCase {
 			{
 				debug("in equals secion");
 				$sTerm = $exactPhrase;
-				// Split the term on whitespace and copy each element into an array
-					$termArr = explode(' ', str_replace(',',' ',$sTerm));
-					// check the $termArr is actually an array, iterate through it adding to the query if $term is not empty
-					if (is_array($termArr))
-						foreach ($termArr as $term)
-							if (!empty($term))
-								$extraSql     .= " case_header = '" . $term . "' or ";
+								$extraSql     .= " case_header like '%" . $sTerm . "%'   or ";
+                                                                $extraSql = substr($extraSql,0,strlen($extraSql)-3) . ")";
+
 			}
 
        }
@@ -545,7 +554,7 @@ class lqSearch extends lqCase {
 			
 		// Finally concatenate the sorting criteria to the end of the query
 		$query =  $query . $dateCheck  . $orderClause;
-	    //die ($query);
+//	    die ($query);
 		
 		$res = $dbh->query($query);
 		// Execute the query and iterate through the results and create an array of objects, 
@@ -561,6 +570,10 @@ class lqSearch extends lqCase {
     protected function searchByCaseDetails($sTerm)
     {
 		global $dbh;
+		
+		
+				if (empty($sTerm))
+		die('<font color=red>Error please enter some keyword(s) to search for</font>');
 		
 		if (!empty($_POST['from']))
 		$from = lqCase::convertDate($_POST['from'],'us');
@@ -594,11 +607,8 @@ class lqSearch extends lqCase {
 					$termArr = explode(' ', str_replace(',',' ',$sTerm));
 					
 					// check the $termArr is actually an array, iterate through it adding to the query if $term is not empty
-					if (is_array($termArr))
-					  foreach ($termArr as $term)
-						 if (!empty($term))
 							
-							 $extraSql     .= " case_detail = '" . $term . "' or ";
+							 $extraSql     .= " case_detail like '%" . $sTerm . "%'   or ";
 			}
        }
        
