@@ -17,7 +17,7 @@ if (!defined(DBUSER))
 define(DBUSER,'lq');
 
 if (!defined(DBPASS))
-define(DBPASS,'flickertochopboccolul');
+define(DBPASS,'********');
 
 if (!defined(DBNAME))
 define(DBNAME,'lq');
